@@ -29,12 +29,21 @@ class Boy extends Thread {
 }
 */
 
-public class SittingPlanMain {
-    public static void main(String[] args) {
+class Counter {
+    int count = 0;
+    public synchronized void increment() {
+        count++;
+    }
+}
 
-        Runnable girl = () -> {
-            for (int i = 0; i < 10; i++) {
-                System.out.println("Girl");
+public class Lecture1 {
+    public static void main(String[] args) throws InterruptedException {
+
+        Counter counter = new Counter();
+
+        Runnable c1 = () -> {
+            for (int i = 0; i < 200; i++) {
+                counter.increment();
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -43,9 +52,9 @@ public class SittingPlanMain {
             }
         };
 
-        Runnable boy = () -> {
-            for(int i = 0; i < 10; i++){
-                System.out.println("Boy");
+        Runnable c2 = () -> {
+            for(int i = 0; i < 200; i++){
+                counter.increment();
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -54,9 +63,13 @@ public class SittingPlanMain {
             }
         };
 
-        Thread t1 = new Thread(girl);
-        Thread t2 = new Thread(boy);
+        Thread t1 = new Thread(c1);
+        Thread t2 = new Thread(c2);
         t1.start();
         t2.start();
+
+        t1.join();
+        t2.join();
+        System.out.println(counter.count);
     }
 }
