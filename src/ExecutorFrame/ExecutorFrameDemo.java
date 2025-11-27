@@ -1,5 +1,8 @@
 package ExecutorFrame;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 class Task implements Runnable{
     int num;
     public Task(int num){
@@ -15,3 +18,12 @@ class Task implements Runnable{
     }
 }
 
+public class ExecutorFrameDemo {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(new Task(1));
+        executorService.execute(new Task(2));
+        executorService.execute(new Task(3));
+        executorService.shutdown();
+    }
+}
