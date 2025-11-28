@@ -10,11 +10,11 @@ class Task implements Runnable{
     }
     @Override
     public void run (){
-        System.out.println("Task " + num + "has started");
+        System.out.println("Task " + num + " has started");
         for(int i = num; i<num*10; i++){
             System.out.println(i);
         }
-        System.out.println("Task " + num + "completed");
+        System.out.println("Task " + num + " completed");
     }
 }
 
